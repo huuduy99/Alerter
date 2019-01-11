@@ -6,23 +6,24 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Build
-import androidx.annotation.*
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.appcompat.view.ContextThemeWrapper
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.Log
-import android.view.*
+import android.view.HapticFeedbackConstants
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.annotation.*
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import kotlinx.android.synthetic.main.alerter_alert_view.view.*
-import android.view.DisplayCutout
-import androidx.core.view.DisplayCutoutCompat
 
 
 /**
@@ -31,8 +32,11 @@ import androidx.core.view.DisplayCutoutCompat
  * @author Kevin Murphy, Tapadoo, Dublin, Ireland, Europe, Earth.
  * @since 26/01/2016
  */
-class Alert @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)
-    : FrameLayout(context, attrs, defStyle), View.OnClickListener, Animation.AnimationListener, SwipeDismissTouchListener.DismissCallbacks {
+class Alert(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : FrameLayout(context, attrs, defStyle), View.OnClickListener, Animation.AnimationListener, SwipeDismissTouchListener.DismissCallbacks {
+
+    private val CLEAN_UP_DELAY_MILLIS = 100
+    private val DISPLAY_TIME_IN_SECONDS: Long = 3000
+    private val MUL = -0x1000000
 
     private var onShowListener: OnShowAlertListener? = null
     internal var onHideListener: OnHideAlertListener? = null
@@ -586,14 +590,5 @@ class Alert @JvmOverloads constructor(context: Context, attrs: AttributeSet? = n
         }
     }
 
-    companion object {
 
-        private const val CLEAN_UP_DELAY_MILLIS = 100
-
-        /**
-         * The amount of time the alert will be visible on screen in seconds
-         */
-        private val DISPLAY_TIME_IN_SECONDS: Long = 3000
-        private const val MUL = -0x1000000
-    }
 }

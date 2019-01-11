@@ -26,7 +26,7 @@ class KotlinDemoActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        window.setBackgroundDrawableResource(android.R.color.white)
+        window.setBackgroundDrawableResource(android.R.color.holo_blue_bright)
     }
 
     private fun showAlertDefault() {

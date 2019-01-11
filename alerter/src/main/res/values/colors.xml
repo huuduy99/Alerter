@@ -4,4 +4,9 @@
     <color name="alert_default_error_background">#F44336</color>
     <color name="alert_default_text_color">@android:color/white</color>
     <color name="alert_default_icon_color">@android:color/white</color>
+
+    <color name="colorError">#e21e00</color>
+    <color name="colorInfo">#41c4f4</color>
+    <color name="colorWarning">#f4a941</color>
+    <color name="colorSuccess">#03bc53</color>
 </resources>

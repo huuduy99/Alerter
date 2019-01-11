@@ -57,7 +57,8 @@
                 <data
                     android:host="tapadoo.com"
                     android:pathPattern=""
-                    android:scheme="https"/>
+                    android:scheme="https"
+                    tools:ignore="AppLinkUrlError" />
             </intent-filter>
         </activity>
     </application>
