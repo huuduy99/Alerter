@@ -6,12 +6,13 @@ import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import androidx.annotation.*
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.FrameLayout
+import androidx.annotation.*
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import java.lang.ref.WeakReference
 
 /**
@@ -21,14 +22,14 @@ import java.lang.ref.WeakReference
  * @author Kevin Murphy
  * @since 03/11/2015.
  */
-class Alerter private constructor() {
+object Alerter {
 
     /**
      * Sets the Alert
      *
      * @param alert The Alert to be references and maintained
      */
-    private var alert: Alert? = null
+    private lateinit var alert: Alert
 
     /**
      * Get the enclosing Decor View
@@ -56,6 +57,11 @@ class Alerter private constructor() {
         activityWeakReference?.get()?.let {
             it.runOnUiThread {
                 //Add the new Alert to the View Hierarchy
+                var layoutParameter = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                layoutParameter.setMargins(0, 500, 0, 0)
+//                alert.layoutParams = layoutParameter
+
+
                 activityDecorView?.addView(alert)
             }
         }
@@ -70,7 +76,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setTitle(@StringRes titleId: Int): Alerter {
-        alert?.setTitle(titleId)
+        alert.setTitle(titleId)
 
         return this
     }
@@ -82,7 +88,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setTitle(title: String): Alerter {
-        alert?.setTitle(title)
+        alert.setTitle(title)
 
         return this
     }
@@ -94,7 +100,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setTitleTypeface(typeface: Typeface): Alerter {
-        alert?.setTitleTypeface(typeface)
+        alert.setTitleTypeface(typeface)
 
         return this
     }
@@ -106,7 +112,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setTitleAppearance(@StyleRes textAppearance: Int): Alerter {
-        alert?.setTitleAppearance(textAppearance)
+        alert.setTitleAppearance(textAppearance)
 
         return this
     }
@@ -118,7 +124,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setContentGravity(gravity: Int): Alerter {
-        alert?.contentGravity = gravity
+        alert.contentGravity = gravity
 
         return this
     }
@@ -130,7 +136,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setText(@StringRes textId: Int): Alerter {
-        alert?.setText(textId)
+        alert.setText(textId)
 
         return this
     }
@@ -142,7 +148,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setText(text: String): Alerter {
-        alert?.setText(text)
+        alert.setText(text)
 
         return this
     }
@@ -154,7 +160,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setTextTypeface(typeface: Typeface): Alerter {
-        alert?.setTextTypeface(typeface)
+        alert.setTextTypeface(typeface)
 
         return this
     }
@@ -166,7 +172,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setTextAppearance(@StyleRes textAppearance: Int): Alerter {
-        alert?.setTextAppearance(textAppearance)
+        alert.setTextAppearance(textAppearance)
 
         return this
     }
@@ -178,7 +184,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setBackgroundColorInt(@ColorInt colorInt: Int): Alerter {
-        alert?.setAlertBackgroundColor(colorInt)
+        alert.setAlertBackgroundColor(colorInt)
 
         return this
     }
@@ -191,7 +197,7 @@ class Alerter private constructor() {
      */
     fun setBackgroundColorRes(@ColorRes colorResId: Int): Alerter {
         activityWeakReference?.get()?.let {
-            alert?.setAlertBackgroundColor(ContextCompat.getColor(it, colorResId))
+            alert.setAlertBackgroundColor(ContextCompat.getColor(it, colorResId))
         }
 
         return this
@@ -204,7 +210,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setBackgroundDrawable(drawable: Drawable): Alerter {
-        alert?.setAlertBackgroundDrawable(drawable)
+        alert.setAlertBackgroundDrawable(drawable)
 
         return this
     }
@@ -216,7 +222,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setBackgroundResource(@DrawableRes drawableResId: Int): Alerter {
-        alert?.setAlertBackgroundResource(drawableResId)
+        alert.setAlertBackgroundResource(drawableResId)
 
         return this
     }
@@ -228,7 +234,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setIcon(@DrawableRes iconId: Int): Alerter {
-        alert?.setIcon(iconId)
+        alert.setIcon(iconId)
 
         return this
     }
@@ -240,7 +246,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setIcon(bitmap: Bitmap): Alerter {
-        alert?.setIcon(bitmap)
+        alert.setIcon(bitmap)
 
         return this
     }
@@ -252,7 +258,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setIcon(drawable: Drawable): Alerter {
-        alert?.setIcon(drawable)
+        alert.setIcon(drawable)
 
         return this
     }
@@ -264,7 +270,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setIconColorFilter(@ColorInt color: Int): Alerter {
-        alert?.setIconColorFilter(color)
+        alert.setIconColorFilter(color)
 
         return this
     }
@@ -276,7 +282,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setIconColorFilter(colorFilter: ColorFilter): Alerter {
-        alert?.setIconColorFilter(colorFilter)
+        alert.setIconColorFilter(colorFilter)
 
         return this
     }
@@ -289,7 +295,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setIconColorFilter(@ColorInt color: Int, mode: PorterDuff.Mode): Alerter {
-        alert?.setIconColorFilter(color, mode)
+        alert.setIconColorFilter(color, mode)
 
         return this
     }
@@ -300,7 +306,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun hideIcon(): Alerter {
-        alert?.showIcon(false)
+        alert.showIcon(false)
 
         return this
     }
@@ -312,7 +318,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setOnClickListener(onClickListener: View.OnClickListener): Alerter {
-        alert?.setOnClickListener(onClickListener)
+        alert.setOnClickListener(onClickListener)
 
         return this
     }
@@ -324,7 +330,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setDuration(milliseconds: Long): Alerter {
-        alert?.duration = milliseconds
+        alert.duration = milliseconds
 
         return this
     }
@@ -336,7 +342,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun enableIconPulse(pulse: Boolean): Alerter {
-        alert?.pulseIcon(pulse)
+        alert.pulseIcon(pulse)
 
         return this
     }
@@ -348,7 +354,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun showIcon(showIcon: Boolean): Alerter {
-        alert?.showIcon(showIcon)
+        alert.showIcon(showIcon)
 
         return this
     }
@@ -360,7 +366,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun enableInfiniteDuration(infiniteDuration: Boolean): Alerter {
-        alert?.setEnableInfiniteDuration(infiniteDuration)
+        alert.setEnableInfiniteDuration(infiniteDuration)
 
         return this
     }
@@ -371,8 +377,8 @@ class Alerter private constructor() {
      * @param listener OnShowAlertListener of Alert
      * @return This Alerter
      */
-    fun setOnShowListener(listener: OnShowAlertListener): Alerter {
-        alert?.setOnShowListener(listener)
+    fun setOnShowListener(listener: ()->Unit): Alerter {
+        alert.setOnShowListener(listener)
 
         return this
     }
@@ -383,8 +389,8 @@ class Alerter private constructor() {
      * @param listener OnHideAlertListener of Alert
      * @return This Alerter
      */
-    fun setOnHideListener(listener: OnHideAlertListener): Alerter {
-        alert?.onHideListener = listener
+    fun setOnHideListener(listener: ()->Unit): Alerter {
+        alert.funOnHide = listener
 
         return this
     }
@@ -395,7 +401,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun enableSwipeToDismiss(): Alerter {
-        alert?.enableSwipeToDismiss()
+        alert.enableSwipeToDismiss()
 
         return this
     }
@@ -407,7 +413,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun enableVibration(enable: Boolean): Alerter {
-        alert?.setVibrationEnabled(enable)
+        alert.setVibrationEnabled(enable)
 
         return this
     }
@@ -418,7 +424,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun disableOutsideTouch(): Alerter {
-        alert?.disableOutsideTouch()
+        alert.disableOutsideTouch()
 
         return this
     }
@@ -430,7 +436,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun enableProgress(enable: Boolean): Alerter {
-        alert?.setEnableProgress(enable)
+        alert.setEnableProgress(enable)
 
         return this
     }
@@ -442,7 +448,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setProgressColorRes(@ColorRes color: Int): Alerter {
-        alert?.setProgressColorRes(color)
+        alert.setProgressColorRes(color)
 
         return this
     }
@@ -454,7 +460,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setProgressColorInt(@ColorInt color: Int): Alerter {
-        alert?.setProgressColorInt(color)
+        alert.setProgressColorInt(color)
 
         return this
     }
@@ -466,7 +472,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setDismissable(dismissable: Boolean): Alerter {
-        alert?.setDismissible(dismissable)
+        alert.setDismissible(dismissable)
 
         return this
     }
@@ -478,7 +484,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setEnterAnimation(@AnimRes animation: Int): Alerter {
-        alert?.enterAnimation = AnimationUtils.loadAnimation(alert?.context, animation)
+        alert.enterAnimation = AnimationUtils.loadAnimation(alert.context, animation)
 
         return this
     }
@@ -490,7 +496,7 @@ class Alerter private constructor() {
      * @return This Alerter
      */
     fun setExitAnimation(@AnimRes animation: Int): Alerter {
-        alert?.exitAnimation = AnimationUtils.loadAnimation(alert?.context, animation)
+        alert.exitAnimation = AnimationUtils.loadAnimation(alert.context, animation)
 
         return this
     }
@@ -502,7 +508,7 @@ class Alerter private constructor() {
      * @param onClick The on click listener
      */
     fun addButton(text: String, @StyleRes style: Int = R.style.AlertButton, onClick: View.OnClickListener): Alerter {
-        alert?.addButton(text, style, onClick)
+        alert.addButton(text, style, onClick)
 
         return this
     }
@@ -516,83 +522,74 @@ class Alerter private constructor() {
         activityWeakReference = WeakReference(activity)
     }
 
-    companion object {
+    private var activityWeakReference: WeakReference<Activity>? = null
 
-        private var activityWeakReference: WeakReference<Activity>? = null
-
-        /**
-         * Creates the Alert, and maintains a reference to the calling Activity
-         *
-         * @param activity The calling Activity
-         * @return This Alerter
-         */
-        @JvmStatic
-        fun create(activity: Activity?): Alerter {
-            if (activity == null) {
-                throw IllegalArgumentException("Activity cannot be null!")
-            }
-
-            val alerter = Alerter()
-
-            //Hide current Alert, if one is active
-            Alerter.clearCurrent(activity)
-
-            alerter.setActivity(activity)
-            alerter.alert = Alert(activity)
-
-            return alerter
+    /**
+     * Creates the Alert, and maintains a reference to the calling Activity
+     *
+     * @param activity The calling Activity
+     * @return This Alerter
+     */
+    fun create(activity: Activity?): Alerter {
+        if (activity == null) {
+            throw IllegalArgumentException("Activity cannot be null!")
         }
 
-        /**
-         * Cleans up the currently showing alert view, if one is present
-         *
-         * @param activity The current Activity
-         */
-        @JvmStatic
-        fun clearCurrent(activity: Activity?) {
-            (activity?.window?.decorView as? ViewGroup)?.let {
-                //Find all Alert Views in Parent layout
-                for (i in 0..it.childCount) {
-                    val childView = if (it.getChildAt(i) is Alert) it.getChildAt(i) as Alert else null
-                    if (childView != null && childView.windowToken != null) {
-                        ViewCompat.animate(childView).alpha(0f).withEndAction(getRemoveViewRunnable(childView))
-                    }
+        //Hide current Alert, if one is active
+        Alerter.clearCurrent(activity)
+
+        setActivity(activity)
+        alert = Alert(activity)
+
+        return this
+    }
+
+    /**
+     * Cleans up the currently showing alert view, if one is present
+     *
+     * @param activity The current Activity
+     */
+    fun clearCurrent(activity: Activity?) {
+        (activity?.window?.decorView as? ViewGroup)?.let {
+            //Find all Alert Views in Parent layout
+            for (i in 0..it.childCount) {
+                val childView = if (it.getChildAt(i) is Alert) it.getChildAt(i) as Alert else null
+                if (childView != null && childView.windowToken != null) {
+                    ViewCompat.animate(childView).alpha(0f).withEndAction(getRemoveViewRunnable(childView))
                 }
             }
         }
+    }
 
-        /**
-         * Hides the currently showing alert view, if one is present
-         */
-        @JvmStatic
-        fun hide() {
+    /**
+     * Hides the currently showing alert view, if one is present
+     */
+    fun hide() {
+        activityWeakReference?.get()?.let {
+            clearCurrent(it)
+        }
+    }
+
+    /**
+     * Check if an Alert is currently showing
+     *
+     * @return True if an Alert is showing, false otherwise
+     */
+    val isShowing: Boolean
+        get() {
+            var isShowing = false
+
             activityWeakReference?.get()?.let {
-                clearCurrent(it)
+                isShowing = it.findViewById<View>(R.id.llAlertBackground) != null
             }
+
+            return isShowing
         }
 
-        /**
-         * Check if an Alert is currently showing
-         *
-         * @return True if an Alert is showing, false otherwise
-         */
-        @JvmStatic
-        val isShowing: Boolean
-            get() {
-                var isShowing = false
-
-                activityWeakReference?.get()?.let {
-                    isShowing = it.findViewById<View>(R.id.llAlertBackground) != null
-                }
-
-                return isShowing
-            }
-
-        private fun getRemoveViewRunnable(childView: Alert?): Runnable {
-            return Runnable {
-                childView?.let {
-                    (childView.parent as? ViewGroup)?.removeView(childView)
-                }
+    private fun getRemoveViewRunnable(childView: Alert?): Runnable {
+        return Runnable {
+            childView?.let {
+                (childView.parent as? ViewGroup)?.removeView(childView)
             }
         }
     }

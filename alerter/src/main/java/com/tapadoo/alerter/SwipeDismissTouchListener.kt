@@ -22,11 +22,11 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.os.Build
-import androidx.annotation.RequiresApi
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.View
 import android.view.ViewConfiguration
+import androidx.annotation.RequiresApi
 
 /**
  * A [View.OnTouchListener] that makes any [View] dismissable when the
@@ -36,9 +36,7 @@ import android.view.ViewConfiguration
  * @param mCallbacks The callback to trigger when the user has indicated that she would like to
  * dismiss this view.
  */
-internal class SwipeDismissTouchListener(
-        private val mView: View,
-        private val mCallbacks: DismissCallbacks) : View.OnTouchListener {
+internal class SwipeDismissTouchListener(private val mView: View, private val mCallbacks: DismissCallbacks) : View.OnTouchListener {
 
     // Cached ViewConfiguration and system-wide constant values
     private val mSlop: Int
@@ -58,8 +56,7 @@ internal class SwipeDismissTouchListener(
         val vc = ViewConfiguration.get(mView.context)
         mSlop = vc.scaledTouchSlop
         mMinFlingVelocity = vc.scaledMinimumFlingVelocity * 16
-        mAnimationTime = mView.context.resources.getInteger(
-                android.R.integer.config_shortAnimTime).toLong()
+        mAnimationTime = mView.context.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
     }
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
@@ -102,22 +99,14 @@ internal class SwipeDismissTouchListener(
                     }
                     if (dismiss) {
                         // dismiss
-                        mView.animate()
-                                .translationX((if (dismissRight) mViewWidth else -mViewWidth).toFloat())
-                                .alpha(0f)
-                                .setDuration(mAnimationTime)
-                                .setListener(object : AnimatorListenerAdapter() {
-                                    override fun onAnimationEnd(animation: Animator) {
-                                        performDismiss()
-                                    }
-                                })
+                        mView.animate().translationX((if (dismissRight) mViewWidth else -mViewWidth).toFloat()).alpha(0f).setDuration(mAnimationTime).setListener(object : AnimatorListenerAdapter() {
+                            override fun onAnimationEnd(animation: Animator) {
+                                performDismiss()
+                            }
+                        })
                     } else if (mSwiping) {
                         // cancel
-                        mView.animate()
-                                .translationX(0f)
-                                .alpha(1f)
-                                .setDuration(mAnimationTime)
-                                .setListener(null)
+                        mView.animate().translationX(0f).alpha(1f).setDuration(mAnimationTime).setListener(null)
                         mCallbacks.onTouch(view, false)
                     }
                     this.recycle()
@@ -130,11 +119,7 @@ internal class SwipeDismissTouchListener(
             }
             MotionEvent.ACTION_CANCEL -> {
                 mVelocityTracker?.run {
-                    mView.animate()
-                            .translationX(0f)
-                            .alpha(1f)
-                            .setDuration(mAnimationTime)
-                            .setListener(null)
+                    mView.animate().translationX(0f).alpha(1f).setDuration(mAnimationTime).setListener(null)
                     this.recycle()
                     mVelocityTracker = null
                     mTranslationX = 0f
@@ -145,7 +130,7 @@ internal class SwipeDismissTouchListener(
             }
             MotionEvent.ACTION_MOVE -> {
                 mVelocityTracker?.run {
-                   this.addMovement(motionEvent)
+                    this.addMovement(motionEvent)
                     val deltaX = motionEvent.rawX - mDownX
                     val deltaY = motionEvent.rawY - mDownY
                     if (Math.abs(deltaX) > mSlop && Math.abs(deltaY) < Math.abs(deltaX) / 2) {
@@ -164,8 +149,7 @@ internal class SwipeDismissTouchListener(
                         mTranslationX = deltaX
                         mView.translationX = deltaX - mSwipingSlop
                         // TODO: use an ease-out interpolator or such
-                        mView.alpha = Math.max(0f, Math.min(1f,
-                                1f - 2f * Math.abs(deltaX) / mViewWidth))
+                        mView.alpha = Math.max(0f, Math.min(1f, 1f - 2f * Math.abs(deltaX) / mViewWidth))
                         return true
                     }
                 }

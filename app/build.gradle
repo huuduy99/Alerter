@@ -1,20 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.tapadoo.alerter_demo"
-
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-
-        versionCode rootProject.ext.app_version_code
+        minSdkVersion 21
+        targetSdkVersion 28
         versionName rootProject.ext.app_version_name
-
         archivesBaseName = "alerter-demo-$versionName"
     }
-
     signingConfigs {
         if (file(rootProject.ext.keystoreProperties).exists()) {
             def props = new Properties()
@@ -30,7 +24,6 @@ android {
             }
         }
     }
-
     buildTypes {
         release {
             if (file(rootProject.ext.keystoreProperties).exists()) {
@@ -40,6 +33,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    buildToolsVersion '28.0.3'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
     }
 }
 

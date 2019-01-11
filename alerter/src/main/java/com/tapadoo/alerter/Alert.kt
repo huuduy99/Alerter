@@ -38,8 +38,8 @@ class Alert(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : 
     private val DISPLAY_TIME_IN_SECONDS: Long = 3000
     private val MUL = -0x1000000
 
-    private var onShowListener: OnShowAlertListener? = null
-    internal var onHideListener: OnHideAlertListener? = null
+    private var funOnShow: (() -> Unit)? = null
+    internal var funOnHide: (() -> Unit)? = null
 
     internal var enterAnimation: Animation = AnimationUtils.loadAnimation(context, R.anim.alerter_slide_in_from_top)
     internal var exitAnimation: Animation = AnimationUtils.loadAnimation(context, R.anim.alerter_slide_out_to_top)
@@ -186,8 +186,7 @@ class Alert(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : 
     }
 
     override fun onAnimationEnd(animation: Animation) {
-        onShowListener?.onShow()
-
+        funOnShow?.invoke()
         startHideAnimation()
     }
 
@@ -249,7 +248,7 @@ class Alert(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : 
                         try {
                             (parent as ViewGroup).removeView(this@Alert)
 
-                            onHideListener?.onHide()
+                            funOnHide?.invoke()
                         } catch (ex: Exception) {
                             Log.e(javaClass.simpleName, "Cannot remove from parent layout")
                         }
@@ -263,7 +262,6 @@ class Alert(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : 
         }, CLEAN_UP_DELAY_MILLIS.toLong())
     }
 
-    /* Setters and Getters */
 
     /**
      * Sets the Alert Background colour
@@ -289,11 +287,7 @@ class Alert(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : 
      * @param drawable The qualified drawable
      */
     fun setAlertBackgroundDrawable(drawable: Drawable) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            llAlertBackground.background = drawable
-        } else {
-            llAlertBackground.setBackgroundDrawable(drawable)
-        }
+        llAlertBackground.background=drawable
     }
 
     /**
@@ -541,8 +535,8 @@ class Alert(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : 
      *
      * @param listener Listener to be fired
      */
-    fun setOnShowListener(listener: OnShowAlertListener) {
-        this.onShowListener = listener
+    fun setOnShowListener(listener: () -> Unit) {
+        this.funOnShow = listener
     }
 
     /**
